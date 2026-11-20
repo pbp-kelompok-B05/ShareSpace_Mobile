@@ -50,6 +50,16 @@ Aplikasi Flutter dirancang untuk memakai backend Django dari ShareSpace Web di P
 
 Daftar URL dan metode HTTP per modul akan ditambahkan setelah endpoint tersedia dan diuji. Tautan PWS di bawah mengarah ke situs web ShareSpace, bukan ke daftar endpoint API.
 
+#### Modul 1: Autentikasi & Manajemen Akun (`/api/v1/auth/`)
+
+| Method | Endpoint | Akses | Deskripsi |
+| --- | --- | --- | --- |
+| `GET`, `HEAD` | `/api/v1/auth/profiles/` | Publik (read-only) | Daftar profil publik pengguna aktif (mendukung `?q=`, tanpa data kontak/alamat privat). |
+| `GET`, `HEAD`, `PUT`, `PATCH` | `/api/v1/auth/profiles/me/` | Pengguna login (`IsAuthenticated`) | Mengambil dan memperbarui profil milik pengguna sendiri beserta ringkasan reputasi & Trust Score. |
+| `GET`, `HEAD` | `/api/v1/auth/profiles/<str:username>/` | Publik (read-only) | Detail profil publik pengguna berdasarkan `username` beserta ringkasan reputasi. |
+| `POST` | `/api/v1/auth/help-requests/` | Tamu belum login | Mengirim permohonan bantuan login / kendala akun dengan respons netral anti-enumeration. |
+| `GET`, `POST` | `/api-auth/` | Publik / Login | Endpoint autentikasi sesi bawaan DRF (*Browsable API*). |
+
 ## Menjalankan Proyek Secara Lokal
 
 Dengan Flutter SDK terpasang dan perangkat atau emulator terdeteksi, jalankan dari folder `sharespace_mobile` (PowerShell atau Git Bash):
