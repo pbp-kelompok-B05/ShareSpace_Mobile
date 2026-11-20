@@ -50,6 +50,44 @@ Aplikasi Flutter dirancang untuk memakai backend Django dari ShareSpace Web di P
 
 Daftar URL dan metode HTTP per modul akan ditambahkan setelah endpoint tersedia dan diuji. Tautan PWS di bawah mengarah ke situs web ShareSpace, bukan ke daftar endpoint API.
 
+**MODUL COD**
+Aplikasi ShareSpace Mobile menggunakan REST API berbasis Django REST Framework (DRF) yang disediakan oleh backend ShareSpace. Berikut daftar endpoint untuk modul COD yang tersedia:
+
+**Base URL:**
+```text
+/api/cod/
+```
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| GET | `/locations/` | Mengambil daftar lokasi COD |
+| POST | `/locations/` | Menambahkan lokasi COD |
+| GET | `/locations/<uuid:pk>/` | Mengambil detail lokasi COD |
+| PUT/PATCH | `/locations/<uuid:pk>/` | Memperbarui lokasi COD |
+| DELETE | `/locations/<uuid:pk>/` | Menghapus lokasi COD |
+| GET | `/loans/<uuid:loan_id>/schedules/` | Mengambil jadwal COD berdasarkan transaksi peminjaman |
+| POST | `/loans/<uuid:loan_id>/schedules/` | Menambahkan jadwal COD |
+| GET | `/schedules/<uuid:pk>/` | Mengambil detail jadwal COD |
+| PUT/PATCH | `/schedules/<uuid:pk>/` | Memperbarui jadwal COD |
+| DELETE | `/schedules/<uuid:pk>/` | Menghapus jadwal COD |
+| GET | `/places/` | Mencari tempat berdasarkan kata kunci, kategori, dan lokasi |
+
+**Query Parameters untuk Places:**
+
+| Parameter | Deskripsi |
+|---|---|
+| `keyword` | Kata kunci pencarian tempat |
+| `kind` | Kategori tempat |
+| `latitude` | Latitude lokasi pencarian |
+| `longitude` | Longitude lokasi pencarian |
+| `radius` | Radius pencarian dalam meter |
+| `page` | Nomor halaman hasil |
+| `page_size` | Jumlah data per halaman |
+
+**Authentication:** Seluruh endpoint memerlukan autentikasi pengguna.
+
+**Catatan:** Endpoint di atas merupakan endpoint backend modul COD yang tersedia untuk diintegrasikan dengan aplikasi mobile. Penggunaan endpoint oleh aplikasi Flutter mengikuti kebutuhan masing-masing fitur.
+
 ## Menjalankan Proyek Secara Lokal
 
 Dengan Flutter SDK terpasang dan perangkat atau emulator terdeteksi, jalankan dari folder `sharespace_mobile` (PowerShell atau Git Bash):
