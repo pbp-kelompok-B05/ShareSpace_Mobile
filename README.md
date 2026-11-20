@@ -48,45 +48,72 @@ Aplikasi Flutter dirancang untuk memakai backend Django dari ShareSpace Web di P
 
 ### Daftar Endpoint DRF
 
-Daftar URL dan metode HTTP per modul akan ditambahkan setelah endpoint tersedia dan diuji. Tautan PWS di bawah mengarah ke situs web ShareSpace, bukan ke daftar endpoint API.
+#### Modul COD
 
-**MODUL COD**
-Aplikasi ShareSpace Mobile menggunakan REST API berbasis Django REST Framework (DRF) yang disediakan oleh backend ShareSpace. Berikut daftar endpoint untuk modul COD yang tersedia:
+Aplikasi ShareSpace Mobile menggunakan REST API berbasis Django REST Framework (DRF) yang disediakan oleh backend ShareSpace. Berikut daftar endpoint untuk modul COD yang tersedia di branch `feature/cod-api` (repo Django).
 
 **Base URL:**
 ```text
 /api/cod/
 ```
 
-| Method | Endpoint | Deskripsi |
-|---|---|---|
-| GET | `/locations/` | Mengambil daftar lokasi COD |
-| POST | `/locations/` | Menambahkan lokasi COD |
-| GET | `/locations/<uuid:pk>/` | Mengambil detail lokasi COD |
-| PUT/PATCH | `/locations/<uuid:pk>/` | Memperbarui lokasi COD |
-| DELETE | `/locations/<uuid:pk>/` | Menghapus lokasi COD |
-| GET | `/loans/<uuid:loan_id>/schedules/` | Mengambil jadwal COD berdasarkan transaksi peminjaman |
-| POST | `/loans/<uuid:loan_id>/schedules/` | Menambahkan jadwal COD |
-| GET | `/schedules/<uuid:pk>/` | Mengambil detail jadwal COD |
-| PUT/PATCH | `/schedules/<uuid:pk>/` | Memperbarui jadwal COD |
-| DELETE | `/schedules/<uuid:pk>/` | Menghapus jadwal COD |
-| GET | `/places/` | Mencari tempat berdasarkan kata kunci, kategori, dan lokasi |
+Path di atas digabung dengan base URL PWS, atau `http://10.0.2.2:8000` jika aplikasi dijalankan di emulator Android.
+
+**Daftar Endpoint:**
+
+| Method | Endpoint | Deskripsi | Catatan |
+|---|---|---|---|
+| GET | `/locations/` | Mengambil daftar lokasi COD | |
+| POST | `/locations/` | Menambahkan lokasi COD | |
+| GET | `/locations/<uuid:pk>/` | Mengambil detail lokasi COD | 404 jika tidak ditemukan |
+| PUT/PATCH | `/locations/<uuid:pk>/` | Memperbarui lokasi COD | Hanya pembuat atau staff |
+| DELETE | `/locations/<uuid:pk>/` | Menghapus lokasi COD | Hapus permanen, hanya pembuat atau staff. 409 jika masih dipakai jadwal COD |
+| GET | `/loans/<uuid:loan_id>/schedules/` | Mengambil jadwal COD berdasarkan transaksi peminjaman | Hanya borrower, pemilik barang, atau superuser (selain itu 404) |
+| POST | `/loans/<uuid:loan_id>/schedules/` | Menambahkan jadwal COD | Hanya jika status pinjaman `pending`, `approved`, atau `borrowed` (selain itu 400) |
+| GET | `/schedules/<uuid:pk>/` | Mengambil detail jadwal COD | Hanya borrower, pemilik barang, atau superuser (selain itu 404) |
+| PUT/PATCH | `/schedules/<uuid:pk>/` | Memperbarui jadwal COD | Hanya jika status pinjaman `pending`, `approved`, atau `borrowed` (selain itu 400) |
+| DELETE | `/schedules/<uuid:pk>/` | Menghapus jadwal COD | Hanya jika status pinjaman `pending` atau `approved` (selain itu 400) |
+| GET | `/places/` | Mencari tempat berdasarkan kata kunci, kategori, dan lokasi | Respons dipaginasi, input tidak valid mengembalikan 400 |
 
 **Query Parameters untuk Places:**
 
 | Parameter | Deskripsi |
 |---|---|
-| `keyword` | Kata kunci pencarian tempat |
-| `kind` | Kategori tempat |
-| `latitude` | Latitude lokasi pencarian |
-| `longitude` | Longitude lokasi pencarian |
-| `radius` | Radius pencarian dalam meter |
+| `keyword` | Kata kunci pencarian tempat (mencocokkan nama atau alamat) |
+| `kind` | Kategori tempat. `kind=all` berarti tanpa filter |
+| `latitude` | Latitude lokasi pencarian (-90 sampai 90). Harus dikirim bersama `longitude` |
+| `longitude` | Longitude lokasi pencarian (-180 sampai 180). Harus dikirim bersama `latitude` |
+| `radius` | Radius pencarian dalam meter (1-50000, default 1000). Hanya berlaku jika koordinat dikirim |
 | `page` | Nomor halaman hasil |
-| `page_size` | Jumlah data per halaman |
+| `page_size` | Jumlah data per halaman (default 20, maksimum 100) |
 
-**Authentication:** Seluruh endpoint memerlukan autentikasi pengguna.
+Jika koordinat dikirim, hasil diurutkan berdasarkan jarak terdekat. Jika tidak, hasil diurutkan berdasarkan nama.
 
-**Catatan:** Endpoint di atas merupakan endpoint backend modul COD yang tersedia untuk diintegrasikan dengan aplikasi mobile. Penggunaan endpoint oleh aplikasi Flutter mengikuti kebutuhan masing-masing fitur.
+**Format Respons Places:**
+
+Respons dipaginasi (`CODPlacesPagination`), bukan array polos.
+
+```json
+{
+  "count": 0,
+  "next": null,
+  "previous": null,
+  "results": []
+}
+```
+
+**Authentication:** Seluruh endpoint memerlukan autentikasi pengguna (`IsAuthenticated`). Aplikasi menggunakan session cookie, dan request tulis (POST/PUT/PATCH/DELETE) wajib menyertakan header `X-CSRFToken`.
+
+**Kode Error:**
+
+| Kode | Keterangan |
+|---|---|
+| 400 | Input tidak valid (parameter Places, atau status pinjaman tidak memenuhi syarat) |
+| 403 | Tidak terautentikasi atau tidak memiliki izin |
+| 404 | Resource tidak ditemukan atau tidak dapat diakses pengguna |
+| 409 | Lokasi COD tidak dapat dihapus karena masih dipakai jadwal COD |
+
+**Catatan:** Endpoint di atas tersedia di branch `dev` dan dapat diintegrasikan dengan aplikasi mobile setelah branch tersebut di-merge ke main dan di-deploy ke PWS. Penggunaan endpoint oleh aplikasi Flutter mengikuti kebutuhan masing-masing fitur.
 
 ## Menjalankan Proyek Secara Lokal
 
