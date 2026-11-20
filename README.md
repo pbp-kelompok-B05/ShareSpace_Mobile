@@ -1,17 +1,69 @@
-# sharespace_mobile
+# ShareSpace Mobile ♻️
 
-A new Flutter project.
+**Proyek Akhir Semester Pemrograman Berbasis Platform — Kelompok B05**
 
-## Getting Started
+**Tema:** Sustainable Living — Waste Management & Conscious Shopping
 
-This project is a starting point for a Flutter application.
+## Deskripsi Aplikasi
 
-A few resources to get you started if this is your first Flutter project:
+ShareSpace Mobile adalah versi Flutter dari ShareSpace Web, platform peminjaman barang berbasis komunitas untuk mahasiswa dan warga sekitar. Pengguna bisa meminjam barang yang hanya sesekali dibutuhkan, seperti kalkulator, raket, atau buku referensi, tanpa harus membeli baru. Tujuannya adalah menghemat biaya dan mengurangi limbah dengan memanfaatkan barang yang sudah ada.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Anggota Kelompok
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Nama                     | NPM        |
+| ------------------------ | ---------- |
+| Muhammad Taufiq Ramadhan | 2506536143 |
+| Azka Nur Jauhar          | 2506612410 |
+| Fadhil Abdurrohman       | 2506656690 |
+| Maximus Quinn Hertada    | 2506613552 |
+| Matthew Raeann Alexandra | 2506544763 |
+
+## Daftar Modul dan Pembagian Kerja
+
+Pembagian modul mengikuti Proyek Tengah Semester. Tabel ini menjelaskan cakupan modul yang akan dibawa ke aplikasi mobile.
+
+| No. | Modul                           | Penanggung Jawab         | Cakupan                                                                                      |
+| --- | ------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------- |
+| 1   | Autentikasi & Manajemen Akun    | Azka Nur Jauhar          | Registrasi, masuk, keluar, dan pengelolaan profil pengguna.                                  |
+| 2   | Katalog & Manajemen Barang      | Matthew Raeann Alexandra | Menelusuri katalog, melihat detail, dan mengelola barang yang dipinjamkan.                   |
+| 3   | Transaksi Peminjaman            | Fadhil Abdurrohman       | Mengajukan dan menanggapi permintaan serta memantau status peminjaman hingga pengembalian.   |
+| 4   | Lokasi COD & Jadwal Pengambilan | Muhammad Taufiq Ramadhan | Menentukan titik temu serta menjadwalkan pengambilan dan pengembalian barang.                |
+| 5   | Review, Reputasi & Laporan      | Maximus Quinn Hertada    | Memberi ulasan setelah transaksi selesai, melihat reputasi pengguna, dan melaporkan masalah. |
+
+## Peran Pengguna
+
+- **Peminjam:** mencari barang, mengajukan peminjaman, dan mengikuti perkembangan transaksi.
+- **Pemilik barang:** menawarkan dan mengelola barang serta menanggapi permintaan peminjaman.
+- **Admin:** mengawasi aktivitas platform dan meninjau laporan pengguna.
+
+Satu akun dapat berperan sebagai peminjam dan pemilik barang, tergantung transaksinya.
+
+## Alur Integrasi Mobile dan Web
+
+Aplikasi Flutter dirancang untuk memakai backend Django dari ShareSpace Web di PWS. Keduanya menggunakan basis data ShareSpace yang sama di server Django. Flutter tidak mengakses basis data secara langsung.
+
+1. Flutter mengirim permintaan HTTPS ke endpoint modul di **Django REST Framework (DRF)** pada ShareSpace Web.
+2. Backend memeriksa hak akses, memvalidasi data masukan, lalu membaca atau memperbarui data melalui model Django.
+3. Backend mengirim respons JSON. Flutter mengolah respons untuk menampilkan data, memperbarui tampilan setelah perubahan, atau menampilkan pesan kesalahan.
+
+### Daftar Endpoint DRF
+
+Daftar URL dan metode HTTP per modul akan ditambahkan setelah endpoint tersedia dan diuji. Tautan PWS di bawah mengarah ke situs web ShareSpace, bukan ke daftar endpoint API.
+
+## Menjalankan Proyek Secara Lokal
+
+Dengan Flutter SDK terpasang dan perangkat atau emulator terdeteksi, jalankan dari folder `sharespace_mobile` (PowerShell atau Git Bash):
+
+```sh
+flutter pub get
+flutter run
+```
+
+## Tautan Penting
+
+- [Repositori backend ShareSpace Web](https://github.com/pbp-kelompok-B05/ShareSpace)
+- [Situs ShareSpace Web di PWS](https://pws.cs.ui.ac.id/maximus.quinn/sharespace)
+- **Desain Figma mobile:** menyusul.
+- **APK:** menyusul setelah rilis.
+
+## Penggunaan AI
