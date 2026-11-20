@@ -37,6 +37,40 @@ class _AuthHelpFormPageState extends State<AuthHelpFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // === Penanda Simulasi Lokal Checkpoint 1 ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9EEA9),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: const Color(0xFF216C4C)),
+                  ),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        size: 18.0,
+                        color: Color(0xFF184C38),
+                      ),
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          'Simulasi lokal (Checkpoint 1): pengiriman bantuan login belum tersambung ke backend DRF.',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF1C3029),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               // === Username atau Email Akun ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -182,7 +216,7 @@ class _AuthHelpFormPageState extends State<AuthHelpFormPage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        'Permohonan bantuan Anda telah diterima. Jika akun terdaftar, admin akan menghubungi email kontakmu.',
+                                        'Simulasi lokal: permohonan bantuan belum dikirim ke backend. Setelah terintegrasi, jika akun terdaftar admin akan menghubungi email kontakmu.',
                                       ),
                                       const SizedBox(height: 12.0),
                                       Text('Akun: $savedAccount'),

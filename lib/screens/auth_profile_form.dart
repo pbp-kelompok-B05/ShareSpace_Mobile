@@ -55,6 +55,40 @@ class _AuthProfileFormPageState extends State<AuthProfileFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // === Penanda Simulasi Lokal Checkpoint 1 ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9EEA9),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: const Color(0xFF216C4C)),
+                  ),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        size: 18.0,
+                        color: Color(0xFF184C38),
+                      ),
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          'Simulasi lokal (Checkpoint 1): penyimpanan profil belum tersambung ke backend DRF.',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF1C3029),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               // === Nama Lengkap ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -230,6 +264,10 @@ class _AuthProfileFormPageState extends State<AuthProfileFormPage> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                                      const Text(
+                                        'Catatan: penyimpanan ini masih berupa simulasi lokal sampai tersambung ke backend.',
+                                      ),
+                                      const SizedBox(height: 10.0),
                                       Text('Nama Lengkap: $savedName'),
                                       Text('NPM: $savedNpm'),
                                       Text('Nomor Telepon: $savedPhone'),

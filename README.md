@@ -58,7 +58,8 @@ Daftar URL dan metode HTTP per modul akan ditambahkan setelah endpoint tersedia 
 | `GET`, `HEAD`, `PUT`, `PATCH` | `/api/v1/auth/profiles/me/` | Pengguna login (`IsAuthenticated`) | Mengambil dan memperbarui profil milik pengguna sendiri beserta ringkasan reputasi & Trust Score. |
 | `GET`, `HEAD` | `/api/v1/auth/profiles/<str:username>/` | Publik (read-only) | Detail profil publik pengguna berdasarkan `username` beserta ringkasan reputasi. |
 | `POST` | `/api/v1/auth/help-requests/` | Tamu belum login | Mengirim permohonan bantuan login / kendala akun dengan respons netral anti-enumeration. |
-| `GET`, `POST` | `/api-auth/` | Publik / Login | Endpoint autentikasi sesi bawaan DRF (*Browsable API*). |
+| `GET`, `POST` | `/api-auth/login/` | Publik | Route login sesi bawaan *Browsable API* DRF (bukan endpoint JSON untuk Flutter). |
+| `GET`, `POST` | `/api-auth/logout/` | Pengguna login | Route logout sesi bawaan *Browsable API* DRF (bukan endpoint JSON untuk Flutter). |
 
 ## Menjalankan Proyek Secara Lokal
 
