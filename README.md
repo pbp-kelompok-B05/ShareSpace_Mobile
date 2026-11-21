@@ -115,6 +115,22 @@ Respons dipaginasi (`CODPlacesPagination`), bukan array polos.
 
 **Catatan:** Endpoint di atas tersedia di branch `dev` dan dapat diintegrasikan dengan aplikasi mobile setelah branch tersebut di-merge ke main dan di-deploy ke PWS. Penggunaan endpoint oleh aplikasi Flutter mengikuti kebutuhan masing-masing fitur.
 
+#### Modul 3 — Transaksi Peminjaman (`/api/loans/`)
+
+| Method | Endpoint | Akses | Deskripsi |
+| --- | --- | --- | --- |
+| `GET`, `HEAD` | `/api/loans/?role=borrower` | Pengguna login (`IsAuthenticated`) | Daftar pengajuan milik pengguna sebagai peminjam, mendukung filter `status` dan paginasi `page`. |
+| `GET`, `HEAD` | `/api/loans/?role=lender` | Pengguna login (`IsAuthenticated`) | Daftar pengajuan untuk barang milik pengguna, mendukung filter `status` dan paginasi `page`. |
+| `POST` | `/api/loans/` | Pengguna login dengan reCAPTCHA valid | Mengajukan peminjaman dengan `item`, `start_date`, `due_date`, dan `notes` opsional. |
+| `GET`, `HEAD` | `/api/loans/<uuid:pk>/` | Peminjam atau pemilik barang terkait | Mengambil detail transaksi, status, dan daftar tindakan yang dapat dilakukan pengguna. |
+| `PATCH` | `/api/loans/<uuid:pk>/` | Peminjam terkait | Memperbarui tanggal atau catatan pengajuan yang masih berstatus `pending`. |
+| `POST` | `/api/loans/<uuid:pk>/cancel/` | Peminjam terkait | Membatalkan pengajuan yang masih berstatus `pending`. |
+| `POST` | `/api/loans/<uuid:pk>/approve/` | Pemilik barang terkait | Menyetujui pengajuan, membuat barang tidak tersedia, dan menolak pengajuan pending lainnya untuk barang tersebut. |
+| `POST` | `/api/loans/<uuid:pk>/reject/` | Pemilik barang terkait | Menolak pengajuan yang masih berstatus `pending`. |
+| `POST` | `/api/loans/<uuid:pk>/mark-borrowed/` | Pemilik barang terkait | Mencatat penyerahan barang dengan mengubah status `approved` menjadi `borrowed`. |
+| `POST` | `/api/loans/<uuid:pk>/request-return/` | Peminjam terkait | Mengajukan pengembalian barang pada transaksi berstatus `borrowed`. |
+| `POST` | `/api/loans/<uuid:pk>/complete/` | Pemilik barang terkait | Mengonfirmasi pengembalian, menyelesaikan transaksi, dan membuat barang tersedia kembali jika belum dihapus. |
+
 ## Menjalankan Proyek Secara Lokal
 
 Dengan Flutter SDK terpasang dan perangkat atau emulator terdeteksi, jalankan dari folder `sharespace_mobile` (PowerShell atau Git Bash):
