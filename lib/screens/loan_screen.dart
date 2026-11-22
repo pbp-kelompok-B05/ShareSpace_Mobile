@@ -3,40 +3,50 @@ import 'package:flutter/material.dart';
 void main() => runApp(const MaterialApp(home: LoanScreen()));
 
 class LoanScreen extends StatelessWidget {
-  const LoanScreen({super.key});
+  const LoanScreen({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   @override
   Widget build(BuildContext context) {
+    final content = ListView(
+      children: const [
+        _LoanRole(
+          title: 'Sebagai peminjam',
+          icon: Icons.person_outline,
+          steps: [
+            'Ajukan peminjaman dengan memilih barang dan tanggal peminjaman.',
+            'Pantau status pengajuan. Selama masih menunggu, pengajuan dapat diubah atau dibatalkan.',
+            'Setelah selesai menggunakan barang, ajukan pengembalian kepada pemilik.',
+          ],
+        ),
+        _LoanRole(
+          title: 'Sebagai pemilik barang',
+          icon: Icons.inventory_2_outlined,
+          steps: [
+            'Tinjau pengajuan untuk barang milikmu, lalu setujui atau tolak.',
+            'Setelah barang diserahkan, tandai barang sebagai dipinjam.',
+            'Konfirmasi pengembalian setelah barang diterima kembali.',
+          ],
+        ),
+      ],
+    );
+
+    if (!showAppBar) return content;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Transaksi Peminjaman')),
-      body: ListView(
-        children: const [
-          _LoanRole(
-            title: 'Sebagai peminjam',
-            icon: Icons.person_outline,
-            steps: [
-              'Ajukan peminjaman dengan memilih barang dan tanggal peminjaman.',
-              'Pantau status pengajuan. Selama masih menunggu, pengajuan dapat diubah atau dibatalkan.',
-              'Setelah selesai menggunakan barang, ajukan pengembalian kepada pemilik.',
-            ],
-          ),
-          _LoanRole(
-            title: 'Sebagai pemilik barang',
-            icon: Icons.inventory_2_outlined,
-            steps: [
-              'Tinjau pengajuan untuk barang milikmu, lalu setujui atau tolak.',
-              'Setelah barang diserahkan, tandai barang sebagai dipinjam.',
-              'Konfirmasi pengembalian setelah barang diterima kembali.',
-            ],
-          ),
-        ],
-      ),
+      body: content,
     );
   }
 }
 
 class _LoanRole extends StatelessWidget {
-  const _LoanRole({required this.title, required this.icon, required this.steps});
+  const _LoanRole({
+    required this.title,
+    required this.icon,
+    required this.steps,
+  });
 
   final String title;
   final IconData icon;
