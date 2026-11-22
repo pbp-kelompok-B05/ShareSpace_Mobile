@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../features/items/presentation/items_page.dart';
+import '../screens/review_screen.dart';
 import 'app_drawer.dart';
 import 'coming_soon_page.dart';
 
@@ -17,9 +18,10 @@ class _AppShellState extends State<AppShell> {
 
   // Tiap anggota mengganti ComingSoonPage dengan halaman modulnya.
   Widget _pageFor(AppModule module) => switch (module) {
-        AppModule.items => const ItemsPage(),
-        _ => ComingSoonPage(title: module.title),
-      };
+    AppModule.items => const ItemsPage(),
+    AppModule.reviews => const ReviewScreen(),
+    _ => ComingSoonPage(title: module.title),
+  };
 
   @override
   Widget build(BuildContext context) {
