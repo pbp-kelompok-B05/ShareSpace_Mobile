@@ -48,9 +48,19 @@ Aplikasi Flutter dirancang untuk memakai backend Django dari ShareSpace Web di P
 
 ### Daftar Endpoint DRF
 
-#### Modul COD
+#### Modul 2 — Katalog & Manajemen Barang (`/api/v1/items/`)
 
-Aplikasi ShareSpace Mobile menggunakan REST API berbasis Django REST Framework (DRF) yang disediakan oleh backend ShareSpace. Berikut daftar endpoint untuk modul COD yang tersedia di branch `feature/cod-api` (repo Django).
+| Method | Endpoint | Akses | Deskripsi |
+| --- | --- | --- | --- |
+| `GET`, `HEAD` | `/api/v1/items/` | Publik | Daftar barang yang tampil di katalog. |
+| `POST` | `/api/v1/items/` | Pengguna login | Menambahkan barang milik akun tersebut. |
+| `GET`, `HEAD` | `/api/v1/items/mine/` | Pengguna login | Daftar barang milik akun yang sedang login. |
+| `GET`, `HEAD` | `/api/v1/items/<int:item_id>/` | Publik untuk barang yang tampil di katalog | Detail barang. |
+| `PUT`, `PATCH`, `DELETE` | `/api/v1/items/<int:item_id>/` | Pemilik barang atau staff | Memperbarui atau menghapus barang. |
+
+#### Modul 4 — Lokasi COD & Jadwal Pengambilan (`/api/cod/`)
+
+Endpoint berikut tersedia di backend Django ShareSpace.
 
 **Base URL:**
 ```text
@@ -113,7 +123,7 @@ Respons dipaginasi (`CODPlacesPagination`), bukan array polos.
 | 404 | Resource tidak ditemukan atau tidak dapat diakses pengguna |
 | 409 | Lokasi COD tidak dapat dihapus karena masih dipakai jadwal COD |
 
-**Catatan:** Endpoint di atas tersedia di branch `dev` dan dapat diintegrasikan dengan aplikasi mobile setelah branch tersebut di-merge ke main dan di-deploy ke PWS. Penggunaan endpoint oleh aplikasi Flutter mengikuti kebutuhan masing-masing fitur.
+**Catatan:** Daftar ini mendokumentasikan API di Django. Halaman COD Flutter untuk Checkpoint 1 belum memanggil endpoint tersebut.
 
 #### Modul 3 — Transaksi Peminjaman (`/api/loans/`)
 
@@ -152,10 +162,16 @@ flutter pub get
 flutter run
 ```
 
+Untuk memakai backend PWS alih-alih Django lokal:
+
+```sh
+flutter run --dart-define=API_BASE_URL=https://maximus-quinn-sharespace.pws.cs.ui.ac.id
+```
+
 ## Tautan Penting
 
 - [Repositori backend ShareSpace Web](https://github.com/pbp-kelompok-B05/ShareSpace)
-- [Situs ShareSpace Web di PWS](https://pws.cs.ui.ac.id/maximus.quinn/sharespace)
+- [Situs ShareSpace Web di PWS](https://maximus-quinn-sharespace.pws.cs.ui.ac.id/)
 - **Desain Figma mobile:** menyusul.
 - **APK:** menyusul setelah rilis.
 

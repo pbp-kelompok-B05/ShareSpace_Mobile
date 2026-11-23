@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../features/items/presentation/items_page.dart';
+import '../screens/auth_checkpoint_screen.dart';
+import '../screens/cod_screen.dart';
+import '../screens/loan_screen.dart';
 import '../screens/review_screen.dart';
 import 'app_drawer.dart';
-import 'coming_soon_page.dart';
 
 /// Kerangka aplikasi: AppBar + drawer + halaman modul terpilih.
 class AppShell extends StatefulWidget {
@@ -16,11 +18,12 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   AppModule _selected = AppModule.items;
 
-  // Tiap anggota mengganti ComingSoonPage dengan halaman modulnya.
   Widget _pageFor(AppModule module) => switch (module) {
+    AppModule.auth => const AuthCheckpointScreen(),
     AppModule.items => const ItemsPage(),
+    AppModule.loans => const LoanScreen(showAppBar: false),
+    AppModule.cod => const CodScreen(),
     AppModule.reviews => const ReviewScreen(),
-    _ => ComingSoonPage(title: module.title),
   };
 
   @override
