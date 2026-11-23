@@ -131,6 +131,18 @@ Respons dipaginasi (`CODPlacesPagination`), bukan array polos.
 | `POST` | `/api/loans/<uuid:pk>/request-return/` | Peminjam terkait | Mengajukan pengembalian barang pada transaksi berstatus `borrowed`. |
 | `POST` | `/api/loans/<uuid:pk>/complete/` | Pemilik barang terkait | Mengonfirmasi pengembalian, menyelesaikan transaksi, dan membuat barang tersedia kembali jika belum dihapus. |
 
+#### Modul 5 — Review, Reputasi & Laporan (`/api/review/`)
+
+Semua endpoint di bawah bersifat baca saja dan membutuhkan sesi login Django. Endpoint sudah ada di `main` repositori Django; halaman Review di Flutter belum memanggil API ini.
+
+| Method | Endpoint | Deskripsi |
+| --- | --- | --- |
+| `GET` | `/api/review/users/<username>/reviews/` | Daftar ulasan yang diterima pengguna, tanpa ulasan yang disembunyikan admin. Paginasi `?page=` (5 ulasan per halaman). |
+| `GET` | `/api/review/users/<username>/reputation/` | Ringkasan reputasi pengguna: rata-rata dan distribusi rating, jumlah ulasan, jumlah transaksi selesai, serta Trust Score dan levelnya. |
+| `GET` | `/api/review/reports/` | Daftar laporan yang dibuat oleh akun yang sedang login. Paginasi `?page=` (10 laporan per halaman), dengan filter `?status=`: `pending`, `reviewing`, `resolved`, atau `rejected`. |
+
+Kedua endpoint berdasarkan `username` mengembalikan `404` jika pengguna tidak ditemukan atau tidak aktif.
+
 ## Menjalankan Proyek Secara Lokal
 
 Dengan Flutter SDK terpasang dan perangkat atau emulator terdeteksi, jalankan dari folder `sharespace_mobile` (PowerShell atau Git Bash):
