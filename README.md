@@ -153,6 +153,17 @@ Semua endpoint di bawah bersifat baca saja dan membutuhkan sesi login Django. En
 
 Kedua endpoint berdasarkan `username` mengembalikan `404` jika pengguna tidak ditemukan atau tidak aktif.
 
+#### Modul 1: Autentikasi & Manajemen Akun (`/api/v1/auth/`)
+
+| Method | Endpoint | Akses | Deskripsi |
+| --- | --- | --- | --- |
+| `GET`, `HEAD` | `/api/v1/auth/profiles/` | Publik (read-only) | Daftar profil publik pengguna aktif (mendukung `?q=`, tanpa data kontak/alamat privat). |
+| `GET`, `HEAD`, `PUT`, `PATCH` | `/api/v1/auth/profiles/me/` | Pengguna login (`IsAuthenticated`) | Mengambil dan memperbarui profil milik pengguna sendiri beserta ringkasan reputasi & Trust Score. |
+| `GET`, `HEAD` | `/api/v1/auth/profiles/<str:username>/` | Publik (read-only) | Detail profil publik pengguna berdasarkan `username` beserta ringkasan reputasi. |
+| `POST` | `/api/v1/auth/help-requests/` | Tamu belum login | Mengirim permohonan bantuan login / kendala akun dengan respons netral anti-enumeration. |
+| `GET`, `POST` | `/api-auth/login/` | Publik | Route login sesi bawaan *Browsable API* DRF (bukan endpoint JSON untuk Flutter). |
+| `POST` | `/api-auth/logout/` | Pengguna login | Route logout sesi bawaan *Browsable API* DRF (bukan endpoint JSON untuk Flutter). |
+
 ## Menjalankan Proyek Secara Lokal
 
 Dengan Flutter SDK terpasang dan perangkat atau emulator terdeteksi, jalankan dari folder `sharespace_mobile` (PowerShell atau Git Bash):
